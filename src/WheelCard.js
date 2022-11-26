@@ -1,9 +1,9 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef,useRef } from "react";
 
-function WheelCard(cardImg,ref) {
+function WheelCard(props,ref) {
     return (
-      <div className="wheel__card" ref={ref}>
-        <img src={cardImg.cardImg}/>
+      <div className="wheel__card" ref={ref} onClick={(e) => props.cardOnClick(e) }>
+        <img src={props.cardImg}/>
       </div>
     );
   }

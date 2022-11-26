@@ -3,7 +3,8 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Flip from "gsap/Flip";
 import { useEffect,useRef,useLayoutEffect } from 'react';
-function SliderSection() {
+import { useState } from 'react';
+function SliderSection(props) {
     const imageList = [
         "https://assets.codepen.io/756881/amys-1.jpg",
         "https://assets.codepen.io/756881/amys-2.jpg",
@@ -32,6 +33,7 @@ function SliderSection() {
     const revealRefs = useRef([]);
     const wheelRef = useRef();
     const sectionRef = useRef();
+    const lastClickedCard = useState(null);
     revealRefs.current = [];
  
     const addToRefs = el => {
@@ -83,7 +85,7 @@ function SliderSection() {
       <div className="slider-section" ref={sectionRef}>
         <div className="wheel" ref={wheelRef}>
           {imageList.map((cardImg,idx)=>
-              <WheelCard cardImg={cardImg} key={idx} ref={addToRefs}/>
+              <WheelCard cardImg={cardImg} key={idx} ref={addToRefs} cardOnClick={props.cardOnClick}/>
           )}
         </div>
       </div>
