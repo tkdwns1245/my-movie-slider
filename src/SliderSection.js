@@ -42,9 +42,10 @@ function SliderSection(props) {
         }
     };
     useEffect(() => {
-      
+      gsap.registerPlugin(ScrollTrigger);
       // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
       let ctx = gsap.context(() => {
+        
         let radius = wheelRef.current.offsetWidth / 2;
         let center = wheelRef.current.offsetWidth / 2;
         let total = revealRefs.current.length;
@@ -76,6 +77,7 @@ function SliderSection(props) {
             invalidateOnRefresh: true
           }
         });
+
       }, sectionRef); // <- IMPORTANT! Scopes selector text
       
       return () => ctx.revert(); // cleanup
