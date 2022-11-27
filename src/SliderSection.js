@@ -4,6 +4,8 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import Flip from "gsap/Flip";
 import { useEffect,useRef,useLayoutEffect } from 'react';
 import { useState } from 'react';
+import axios from 'axios';
+
 function SliderSection(props) {
     const imageList = [
         "https://assets.codepen.io/756881/amys-1.jpg",
@@ -42,6 +44,40 @@ function SliderSection(props) {
         }
     };
     useEffect(() => {
+      const movieParams = {
+        key:'01b8c9367db48a7e1abfd82921b4d640',
+        targetDt:'20221125',
+        itemPerPage: '20'
+      }
+      
+      
+      axios.get('http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json',{ params: movieParams })
+      .then((Response)=>{
+          return Response.data;
+      }).then((response) =>{
+        let dailyBoxOfficeList = response.boxOfficeResult.dailyBoxOfficeList;
+        let searchParams;
+        const naverHeader ={
+          'X-Naver-Client-Id' : 'hjOsmn7IHqbI4ljQ1m8X',
+          'X-Naver-Client-Secret' : 'kdx99NEa9k',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        }
+        for(var i = 0; i < dailyBoxOfficeList.length; i++){
+          searchParams = {query:dailyBoxOfficeList[i].movieNm}
+          axios.get('/v1/search/movie.json',{
+            params:searchParams,
+            headers:naverHeader,
+            withCredentials: true,
+            credentials: 'same-origin',
+          }).then((movieData)=> 
+          {
+            console.log(movieData.data)
+          })
+        } 
+      }).catch((Error) => {
+          console.log(Error);
+      })
       gsap.registerPlugin(ScrollTrigger);
       // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
       let ctx = gsap.context(() => {
