@@ -63,7 +63,15 @@ function App() {
   }, []); // <- empty dependency Array so it doesn't re-run on every render
 
   return (
-    <div className="App" ref={boxRef}>
+    <div className="App" ref={boxRef} >
+      <div className="background"style={{ 
+        width:"100%",
+        height:"100%",
+        position:"fixed"
+      }}>
+        <img src="/movie-background2.jpg" style={{maxWidth: "100%", height: "auto"}}/> 
+      </div>
+      <div className="background-cover" style={{width: "100%", height: "100%",position:"fixed",backgroundColor:"white",opacity:0.2}}></div>
       <div className="header" ref={headerRef} onClick={(e)=> headerOnClick(e)}>
       </div>
       <SliderSection cardOnClick={cardOnClick}>
