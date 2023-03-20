@@ -37,7 +37,7 @@ function SliderSection(props) {
       }
       fetchData();
         
-    }, [revealRefs]); 
+    }, []); 
     useLayoutEffect(()=>{
       if(revealRefs.current.length !== 0){
         // create our context. This function is invoked immediately and all GSAP animations and ScrollTriggers created during the execution of this function get recorded so we can revert() them later (cleanup)
